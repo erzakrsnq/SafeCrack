@@ -28,7 +28,7 @@ public class SafePuzzleUI : MonoBehaviour
         new SequencePuzzle { displayText = "1 -> 4 -> 9 -> 16 -> 25 -> ?", correctAnswer = 36 },
         new SequencePuzzle { displayText = "3 -> 6 -> 12 -> 24 -> 48 -> ?", correctAnswer = 96 },
         new SequencePuzzle { displayText = "5 -> 10 -> 20 -> 40 -> 80 -> ?", correctAnswer = 160 },
-        new SequencePuzzle { displayText = "5 -> 7 -> 11 -> 13 -> 17 -> 19 -> ?", correctAnswer = -5 },
+        new SequencePuzzle { displayText = "5 -> 7 -> 11 -> 13 -> 17 -> 19 -> ?", correctAnswer = 23 },
         new SequencePuzzle { displayText = "2 -> 3 -> 5 -> 8 -> 13 -> ?", correctAnswer = 21 },
         new SequencePuzzle { displayText = "100 -> 50 -> 25 -> 12 -> 6 -> ?", correctAnswer = 3 },
         new SequencePuzzle { displayText = "4 -> 8 -> 16 -> 32 -> 64 -> ?", correctAnswer = 128 }
@@ -75,8 +75,8 @@ public class SafePuzzleUI : MonoBehaviour
 
             if (currentPuzzleIndex >= activePuzzleTarget)
             {
-                sequenceText.text = "SAFE GEOEFFNET";
-                statusText.text = $"Level bestanden! Alle {activePuzzleTarget} Reihen korrekt geloest.";
+                sequenceText.text = "SAFE GEÖFFNET";
+                statusText.text = $"Level bestanden! Alle {activePuzzleTarget} Reihen korrekt gelöst.";
                 submitButton.interactable = false;
                 answerInput.interactable = false;
                 return;
@@ -105,7 +105,7 @@ public class SafePuzzleUI : MonoBehaviour
         currentPuzzleIndex = 0;
         attemptsLeft = maxAttemptsPerRun;
         ShowCurrentPuzzle();
-        statusText.text = $"Zu viele Fehlversuche. Safe wurde zurueckgesetzt. Reihe 1/{activePuzzleTarget} - Versuche gesamt: {attemptsLeft}/{maxAttemptsPerRun}";
+        statusText.text = $"Zu viele Fehlversuche. Safe wurde zurückgesetzt. Reihe 1/{activePuzzleTarget} - Versuche gesamt: {attemptsLeft}/{maxAttemptsPerRun}";
     }
 
     private void BuildRandomPuzzleSet()
