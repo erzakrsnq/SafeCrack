@@ -327,7 +327,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -167.2832, y: 0, z: -74.83093, w: 0}
+  m_margin: {x: -323.0436, y: 0, z: -243.18958, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1101,7 +1101,7 @@ MonoBehaviour:
   answerInput: {fileID: 569241323}
   submitButton: {fileID: 716627925}
   statusText: {fileID: 143109574}
-  maxAttempts: 3
+  maxAttemptsPerSequence: 3
 --- !u!4 &1234383902
 Transform:
   m_ObjectHideFlags: 0
@@ -1396,7 +1396,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -272.10117, w: 0}
+  m_margin: {x: -153.46979, y: 0, z: -437.0238, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

@@ -4,6 +4,13 @@ using UnityEngine.UI;
 
 public class SafePuzzleUI : MonoBehaviour
 {
+    [System.Serializable]
+    private class SequencePuzzle
+    {
+        public string displayText;
+        public int correctAnswer;
+    }
+
     [Header("UI References")]
     [SerializeField] private TMP_Text sequenceText;
     [SerializeField] private TMP_InputField answerInput;
@@ -11,18 +18,24 @@ public class SafePuzzleUI : MonoBehaviour
     [SerializeField] private TMP_Text statusText;
 
     [Header("Puzzle Settings")]
-    [SerializeField] private int maxAttempts = 3;
+    [SerializeField] private int maxAttemptsPerSequence = 3;
 
-    private const int CorrectAnswer = 66;
+    private readonly SequencePuzzle[] puzzles =
+    {
+        new SequencePuzzle { displayText = "2 -> 6 -> 7 -> 21 -> 22 -> ?", correctAnswer = 66 },
+        new SequencePuzzle { displayText = "1 -> 4 -> 9 -> 16 -> 25 -> ?", correctAnswer = 36 },
+        new SequencePuzzle { displayText = "3 -> 6 -> 12 -> 24 -> 48 -> ?", correctAnswer = 96 },
+        new SequencePuzzle { displayText = "5 -> 10 -> 20 -> 40 -> 80 -> ?", correctAnswer = 160 }
+    };
+
+    private int currentPuzzleIndex = 0;
     private int attemptsLeft;
 
     private void Start()
     {
-        attemptsLeft = maxAttempts;
-        sequenceText.text = "2 -> 6 -> 7 -> 21 -> 22 -> ?";
-        statusText.text = $"Gib die naechste Zahl ein. Versuche: {attemptsLeft}/{maxAttempts}";
-
+        attemptsLeft = maxAttemptsPerSequence;
         submitButton.onClick.AddListener(OnSubmitClicked);
+        ShowCurrentPuzzle();
     }
 
     private void OnDestroy()
@@ -31,35 +44,58 @@ public class SafePuzzleUI : MonoBehaviour
             submitButton.onClick.RemoveListener(OnSubmitClicked);
     }
 
+    private void ShowCurrentPuzzle()
+    {
+        sequenceText.text = puzzles[currentPuzzleIndex].displayText;
+        statusText.text = $"Reihe {currentPuzzleIndex + 1}/4 - Versuche: {attemptsLeft}/{maxAttemptsPerSequence}";
+        answerInput.text = "";
+        answerInput.ActivateInputField();
+    }
+
     private void OnSubmitClicked()
     {
-        if (attemptsLeft <= 0)
-        {
-            statusText.text = "Keine Versuche mehr. Starte die Szene neu.";
-            return;
-        }
-
         if (!int.TryParse(answerInput.text, out int userAnswer))
         {
-            statusText.text = $"Bitte gib eine ganze Zahl ein. Versuche: {attemptsLeft}/{maxAttempts}";
+            statusText.text = $"Bitte gib eine ganze Zahl ein. Versuche: {attemptsLeft}/{maxAttemptsPerSequence}";
             return;
         }
 
-        if (userAnswer == CorrectAnswer)
+        if (userAnswer == puzzles[currentPuzzleIndex].correctAnswer)
         {
-            statusText.text = "Richtig! Der Safe akzeptiert die Zahl.";
-            submitButton.interactable = false;
-            answerInput.interactable = false;
+            currentPuzzleIndex++;
+
+            if (currentPuzzleIndex >= puzzles.Length)
+            {
+                sequenceText.text = "SAFE GEOEFFNET";
+                statusText.text = "Level bestanden! Alle 4 Reihen korrekt geloest.";
+                submitButton.interactable = false;
+                answerInput.interactable = false;
+                return;
+            }
+
+            attemptsLeft = maxAttemptsPerSequence;
+            statusText.text = "Richtig! Naechste Reihe...";
+            ShowCurrentPuzzle();
             return;
         }
 
         attemptsLeft--;
-        if (attemptsLeft > 0)
-            statusText.text = $"Falsch. Verbleibende Versuche: {attemptsLeft}/{maxAttempts}";
-        else
-            statusText.text = "Falsch. Keine Versuche mehr. Safe bleibt geschlossen.";
+        if (attemptsLeft <= 0)
+        {
+            ResetSafeAfterFailure();
+            return;
+        }
 
+        statusText.text = $"Falsch. Verbleibende Versuche: {attemptsLeft}/{maxAttemptsPerSequence}";
         answerInput.text = "";
         answerInput.ActivateInputField();
+    }
+
+    private void ResetSafeAfterFailure()
+    {
+        currentPuzzleIndex = 0;
+        attemptsLeft = maxAttemptsPerSequence;
+        ShowCurrentPuzzle();
+        statusText.text = $"Zu viele Fehlversuche. Safe wurde zurueckgesetzt. Reihe 1/4 - Versuche: {attemptsLeft}/{maxAttemptsPerSequence}";
     }
 }
