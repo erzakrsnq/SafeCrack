@@ -19,7 +19,7 @@ public class SafePuzzleUI : MonoBehaviour
     [SerializeField] private TMP_Text statusText;
 
     [Header("Puzzle Settings")]
-    [SerializeField] private int maxAttemptsPerSequence = 3;
+    [SerializeField] private int maxAttemptsPerRun = 3;
     [SerializeField] private int puzzlesPerRun = 4;
 
     private readonly SequencePuzzle[] puzzlePool =
@@ -42,7 +42,7 @@ public class SafePuzzleUI : MonoBehaviour
     private void Start()
     {
         BuildRandomPuzzleSet();
-        attemptsLeft = maxAttemptsPerSequence;
+        attemptsLeft = maxAttemptsPerRun;
         submitButton.onClick.AddListener(OnSubmitClicked);
         ShowCurrentPuzzle();
     }
@@ -56,7 +56,7 @@ public class SafePuzzleUI : MonoBehaviour
     private void ShowCurrentPuzzle()
     {
         sequenceText.text = activePuzzles[currentPuzzleIndex].displayText;
-        statusText.text = $"Reihe {currentPuzzleIndex + 1}/{activePuzzleTarget} - Versuche: {attemptsLeft}/{maxAttemptsPerSequence}";
+        statusText.text = $"Reihe {currentPuzzleIndex + 1}/{activePuzzleTarget} - Versuche gesamt: {attemptsLeft}/{maxAttemptsPerRun}";
         answerInput.text = "";
         answerInput.ActivateInputField();
     }
@@ -65,7 +65,7 @@ public class SafePuzzleUI : MonoBehaviour
     {
         if (!int.TryParse(answerInput.text, out int userAnswer))
         {
-            statusText.text = $"Bitte gib eine ganze Zahl ein. Versuche: {attemptsLeft}/{maxAttemptsPerSequence}";
+            statusText.text = $"Bitte gib eine ganze Zahl ein. Versuche gesamt: {attemptsLeft}/{maxAttemptsPerRun}";
             return;
         }
 
@@ -82,7 +82,6 @@ public class SafePuzzleUI : MonoBehaviour
                 return;
             }
 
-            attemptsLeft = maxAttemptsPerSequence;
             statusText.text = "Richtig! Naechste Reihe...";
             ShowCurrentPuzzle();
             return;
@@ -95,7 +94,7 @@ public class SafePuzzleUI : MonoBehaviour
             return;
         }
 
-        statusText.text = $"Falsch. Verbleibende Versuche: {attemptsLeft}/{maxAttemptsPerSequence}";
+        statusText.text = $"Falsch. Verbleibende Versuche gesamt: {attemptsLeft}/{maxAttemptsPerRun}";
         answerInput.text = "";
         answerInput.ActivateInputField();
     }
@@ -104,9 +103,9 @@ public class SafePuzzleUI : MonoBehaviour
     {
         BuildRandomPuzzleSet();
         currentPuzzleIndex = 0;
-        attemptsLeft = maxAttemptsPerSequence;
+        attemptsLeft = maxAttemptsPerRun;
         ShowCurrentPuzzle();
-        statusText.text = $"Zu viele Fehlversuche. Safe wurde zurueckgesetzt. Reihe 1/{activePuzzleTarget} - Versuche: {attemptsLeft}/{maxAttemptsPerSequence}";
+        statusText.text = $"Zu viele Fehlversuche. Safe wurde zurueckgesetzt. Reihe 1/{activePuzzleTarget} - Versuche gesamt: {attemptsLeft}/{maxAttemptsPerRun}";
     }
 
     private void BuildRandomPuzzleSet()
