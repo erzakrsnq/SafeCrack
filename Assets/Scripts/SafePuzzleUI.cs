@@ -32,6 +32,11 @@ public class SafePuzzleUI : MonoBehaviour
         new SequencePuzzle { displayText = "2 -> 3 -> 5 -> 8 -> 13 -> ?", correctAnswer = 21 },
         new SequencePuzzle { displayText = "100 -> 50 -> 25 -> 12 -> 6 -> ?", correctAnswer = 3 },
         new SequencePuzzle { displayText = "4 -> 8 -> 16 -> 32 -> 64 -> ?", correctAnswer = 128 }
+        new SequencePuzzle { displayText = "2 -> 10 -> 7 -> 15 -> 12 -> ?", correctAnswer = 20 },
+        new SequencePuzzle { displayText = "2 -> 14 -> 11 -> 77 -> 74 -> ?", correctAnswer = 222 },
+        new SequencePuzzle { displayText = "8 -> 4 -> 16 -> 12 -> 48 -> ?", correctAnswer = 44 },
+        new SequencePuzzle { displayText = "1 -> 2 -> 4 -> 8 -> 16 -> ?", correctAnswer = 32 },
+        new SequencePuzzle { displayText = "1 -> 3 -> 9 -> 27 -> 81 -> ?", correctAnswer = 243 },
     };
 
     private readonly List<SequencePuzzle> activePuzzles = new List<SequencePuzzle>();
@@ -82,7 +87,7 @@ public class SafePuzzleUI : MonoBehaviour
                 return;
             }
 
-            statusText.text = "Richtig! Naechste Reihe...";
+            statusText.text = "Richtig! Nächste Reihe...";
             ShowCurrentPuzzle();
             return;
         }
