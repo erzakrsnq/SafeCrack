@@ -10,11 +10,12 @@ public class SafePuzzleUI : MonoBehaviour
     [SerializeField] private Button submitButton;
     [SerializeField] private TMP_Text statusText;
 
+    private const int CorrectAnswer = 66;
+
     private void Start()
     {
-        // Schritt 1: UI-Gerüst (noch keine echte Spiel-Logik)
         sequenceText.text = "2 -> 6 -> 7 -> 21 -> 22 -> ?";
-        statusText.text = "Gib eine Zahl ein und drücke Prüfen.";
+        statusText.text = "Gib die nächste Zahl ein.";
 
         submitButton.onClick.AddListener(OnSubmitClicked);
     }
@@ -22,13 +23,22 @@ public class SafePuzzleUI : MonoBehaviour
     private void OnDestroy()
     {
         if (submitButton != null)
-        {
             submitButton.onClick.RemoveListener(OnSubmitClicked);
-        }
     }
 
     private void OnSubmitClicked()
     {
-        statusText.text = "Eingabe erhalten: " + answerInput.text;
+        if (!int.TryParse(answerInput.text, out int userAnswer))
+        {
+            statusText.text = "Bitte gib eine ganze Zahl ein.";
+            return;
+        }
+
+        statusText.text = userAnswer == CorrectAnswer
+            ? "Richtig! Der Safe akzeptiert die Zahl."
+            : "Falsch, versuch es nochmal.";
+
+        answerInput.text = "";
+        answerInput.ActivateInputField();
     }
 }
