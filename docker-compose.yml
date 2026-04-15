@@ -1,8 +1,9 @@
 services:
   safecrack-web:
-    image: nginx:1.27-alpine
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8080:80"
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - ./Build/WebGL:/usr/share/nginx/html:ro
