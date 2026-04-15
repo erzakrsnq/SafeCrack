@@ -31,7 +31,7 @@ public class SafePuzzleUI : MonoBehaviour
         new SequencePuzzle { displayText = "5 -> 7 -> 11 -> 13 -> 17 -> 19 -> ?", correctAnswer = 23 },
         new SequencePuzzle { displayText = "2 -> 3 -> 5 -> 8 -> 13 -> ?", correctAnswer = 21 },
         new SequencePuzzle { displayText = "100 -> 50 -> 25 -> 12 -> 6 -> ?", correctAnswer = 3 },
-        new SequencePuzzle { displayText = "4 -> 8 -> 16 -> 32 -> 64 -> ?", correctAnswer = 128 }
+        new SequencePuzzle { displayText = "4 -> 8 -> 16 -> 32 -> 64 -> ?", correctAnswer = 128 },
         new SequencePuzzle { displayText = "2 -> 10 -> 7 -> 15 -> 12 -> ?", correctAnswer = 20 },
         new SequencePuzzle { displayText = "2 -> 14 -> 11 -> 77 -> 74 -> ?", correctAnswer = 222 },
         new SequencePuzzle { displayText = "8 -> 4 -> 16 -> 12 -> 48 -> ?", correctAnswer = 44 },
